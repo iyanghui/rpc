@@ -88,7 +88,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext context, Throwable ex) {
-        logger.info("rpc服务通信异常.{}", ex);
+        logger.info("rpc服务通信异常.", ex);
         context.channel().close();
     }
 

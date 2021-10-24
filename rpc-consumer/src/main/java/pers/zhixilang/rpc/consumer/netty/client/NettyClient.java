@@ -67,6 +67,9 @@ public class NettyClient {
         Channel channel = connectionManage.chooseChannel();
         if (null != channel && channel.isActive()) {
             SynchronousQueue<Object> queue = clientHandler.sendRequest(request, channel);
+            // SynchronousQueue没有存储空间，内部使用transfer来实现take&put(offer&poll),
+            // 可认为是长度为1的队列，
+            // queue阻塞，直到queue.put()
             Object result = queue.take();
             return JSONObject.toJSONString(result);
         } else {
@@ -78,6 +81,7 @@ public class NettyClient {
     }
 
     public Channel doConnect(SocketAddress socketAddress) throws Exception{
+        // 考虑多连接
         ChannelFuture future = bootstrap.connect(socketAddress);
         return future.sync().channel();
     }

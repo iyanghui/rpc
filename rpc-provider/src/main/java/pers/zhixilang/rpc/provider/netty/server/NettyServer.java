@@ -6,6 +6,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.util.concurrent.DefaultThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -34,9 +35,20 @@ public class NettyServer implements ApplicationContextAware, InitializingBean {
 
     private static final Logger logger = LoggerFactory.getLogger(NettyServer.class);
 
-    private static final EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+    private static DefaultThreadFactory masterFactory = new DefaultThreadFactory("master-proxy", false);
+    private static DefaultThreadFactory workerFactory = new DefaultThreadFactory("worker-proxy", false);
 
-    private static final EventLoopGroup workerGroup = new NioEventLoopGroup(4);
+    /**
+     * Reactor线程池
+     * 用于接收客户端的tcp连接
+     */
+    private static final EventLoopGroup bossGroup = new NioEventLoopGroup(1, masterFactory);
+
+    /**
+     * Reactor线程池
+     * 用于处理I/O相关的读写操作，或者执行系统task、定时任务等
+     */
+    private static final EventLoopGroup workerGroup = new NioEventLoopGroup(4, workerFactory);
 
     /**
      * 存放接口服务类
@@ -78,6 +90,7 @@ public class NettyServer implements ApplicationContextAware, InitializingBean {
 
         new Thread(() -> {
             try {
+                // 初始化netty服务器，并且开始监听端口的socket请求
                 ServerBootstrap serverBootstrap = new ServerBootstrap();
                 serverBootstrap.group(bossGroup, workerGroup)
                         .channel(NioServerSocketChannel.class)
