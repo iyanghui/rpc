@@ -1,0 +1,6 @@
+rpc:
+  # 服务注册地址(zookeeper)
+  registry: "127.0.0.1:2181"
+  # 服务提供rpc地址
+  provider: "127.0.0.1:18868"
+
