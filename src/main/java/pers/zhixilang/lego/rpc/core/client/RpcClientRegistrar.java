@@ -18,7 +18,7 @@ import java.util.Set;
  * @version 1.0.0
  * date 2022-03-08 20:17
  */
-public class RpcClientImportBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
+public class RpcClientRegistrar implements ImportBeanDefinitionRegistrar {
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata annotationMetadata, BeanDefinitionRegistry beanDefinitionRegistry) {
@@ -30,6 +30,7 @@ public class RpcClientImportBeanDefinitionRegistrar implements ImportBeanDefinit
     }
 
     private String[] getBasePackages(AnnotationMetadata annotationMetadata) {
+        // 参考org.springframework.cloud.openfeign.FeignClientsRegistrar
         Map<String, Object> attributes = annotationMetadata.getAnnotationAttributes(EnableRpc.class.getCanonicalName());
         if (null == attributes) {
             throw new RpcException();

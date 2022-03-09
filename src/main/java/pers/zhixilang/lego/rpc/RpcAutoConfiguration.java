@@ -8,7 +8,7 @@ import pers.zhixilang.lego.rpc.core.client.RpcFactory;
 import pers.zhixilang.lego.rpc.netty.client.NettyClient;
 import pers.zhixilang.lego.rpc.netty.provider.NettyServer;
 import pers.zhixilang.lego.rpc.core.ServiceDiscovery;
-import pers.zhixilang.lego.rpc.core.provider.RpcProviderApplicationContextAware;
+import pers.zhixilang.lego.rpc.core.provider.RpcProviderContextAware;
 
 /**
  * @author zhixilang
@@ -35,7 +35,7 @@ public class RpcAutoConfiguration {
 
     @Bean
     public ApplicationContextAware rpcProviderApplicationContextAware() {
-        return new RpcProviderApplicationContextAware();
+        return new RpcProviderContextAware();
     }
 
     @Bean

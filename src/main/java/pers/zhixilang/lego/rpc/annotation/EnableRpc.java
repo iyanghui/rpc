@@ -2,7 +2,7 @@ package pers.zhixilang.lego.rpc.annotation;
 
 import org.springframework.context.annotation.Import;
 import pers.zhixilang.lego.rpc.RpcAutoConfiguration;
-import pers.zhixilang.lego.rpc.core.client.RpcClientImportBeanDefinitionRegistrar;
+import pers.zhixilang.lego.rpc.core.client.RpcClientRegistrar;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({RpcAutoConfiguration.class, RpcClientImportBeanDefinitionRegistrar.class})
+@Import({RpcAutoConfiguration.class, RpcClientRegistrar.class})
 public @interface EnableRpc {
 
     /**

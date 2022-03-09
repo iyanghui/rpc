@@ -15,8 +15,8 @@ import java.util.Map;
  * @version 1.0.0
  * date 2022-03-08 21:54
  */
-public class RpcProviderApplicationContextAware implements ApplicationContextAware {
-    private static final Logger logger = LoggerFactory.getLogger(RpcProviderApplicationContextAware.class);
+public class RpcProviderContextAware implements ApplicationContextAware {
+    private static final Logger logger = LoggerFactory.getLogger(RpcProviderContextAware.class);
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
